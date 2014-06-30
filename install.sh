@@ -1,10 +1,10 @@
 #!/bin/sh
-#apt-get update
-#apt-get upgrade -y
-apt-get install -y git ruby1.9.1-dev
+apt-get update
+apt-get upgrade -y
+apt-get install -y git ruby-all-dev vim vim-puppet puppet-lint 
+gem install bundler
 gem install hiera
 gem install librarian-puppet
-apt-get install puppet
 echo "Updating / Cloning /opt/puppet"
 if [ -d /opt/puppet ] ; then
 	cd /opt/puppet
@@ -17,4 +17,4 @@ else
 	librarian-puppet install --verbose --clean
 fi
 echo "applying puppet"
-puppet apply --modulepath=/opt/puppet/modules/ /opt/puppet/manifests/nodes.pp
+puppet apply --modulepath=/opt/puppet/modules/ --hiera_config=/opt/puppet/hiera.yaml /opt/puppet/manifests/nodes.pp
