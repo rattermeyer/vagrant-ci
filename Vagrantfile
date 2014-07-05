@@ -43,10 +43,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     if Vagrant.has_plugin?("vagrant-cachier")
       config.cache.scope = :box
-      config.cache.synced_folder_opts = {
-        type: :nfs,
-        mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-      }
       # For more information please check http://docs.vagrantup.com/v2/synced-folders/basic_usage.html
     end
     cimaster.vm.provider "virtualbox" do |vb|
