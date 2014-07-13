@@ -32,8 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
   config.vm.define "cimaster" do |cimaster|
-    cimaster.vm.box = "devopsarchitect/ubuntu-trusty-docker-puppet-14.04"
+	cimaster.vm.box = "phusion-open-ubuntu-14.04-amd64"
+	cimaster.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box"
     cimaster.vm.hostname = "ci-master.vm"
+	cimaster.vm.network "forwarded_port", guest: 80, host: 8080
     if Vagrant.has_plugin?("vagrant-proxyconf")
       cimaster.proxy.http     = "http://tuxedo:3129/"
       cimaster.proxy.https    = "http://tuxedo:3129/"
@@ -48,8 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     cimaster.vm.provider "virtualbox" do |vb|
        vb.customize ["modifyvm", :id, "--memory", "2048"]
        vb.customize ["modifyvm", :id, "--nic1", "nat"]
-       vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
-       vb.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet0"]
     end
     cimaster.vm.provision "shell", path: "install.sh"
   end
