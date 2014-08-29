@@ -37,7 +37,7 @@ fi
 
 # Enable passwordless sudo for the vagrant user
 if [ -f /etc/sudoers.d/vagrant ]; then
-  log 'Skipping sudoers file creation.'
+  echo 'Skipping sudoers file creation.'
 else
   echo 'Sudoers file was not found'
   echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant

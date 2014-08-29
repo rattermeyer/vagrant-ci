@@ -1,4 +1,4 @@
-FROM dev-base:1
+FROM rattermeyer/devbase:2
 MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
 RUN apt-get update
