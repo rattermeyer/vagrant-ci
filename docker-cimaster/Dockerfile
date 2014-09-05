@@ -1,10 +1,30 @@
-FROM rattermeyer/devbase:2
+FROM devopsarchitect/devbase
 MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
 RUN apt-get update
-RUN apt-get install build-essential ruby-all-dev
+RUN apt-get upgrade -y
+RUN apt-get install -y build-essential ruby-all-dev git vim 
+RUN apt-get install -y puppet vim-puppet puppet-lint 
+RUN gem install bundler
+RUN gem install hiera
+RUN gem install librarian-puppet
 ADD ./prepare-vagrant-user.sh /tmp/
 ADD ./install.sh /tmp/
 RUN chmod u+x /tmp/*.sh
 RUN /tmp/prepare-vagrant-user.sh 
 RUN /tmp/install.sh
+VOLUME ["/var/lib/jenkins/jobs"]
+RUN mkdir -p /etc/service/jenkins
+ADD ./jenkins.sh /etc/service/jenkins/run
+RUN mkdir -p /var/lib/jenkins/.ssh && chown -R jenkins:jenkins /var/lib/jenkins/.ssh
+ADD ci_insecure /var/lib/jenkins/.ssh/id_rsa 
+RUN chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa && chmod 600 /var/lib/jenkins/.ssh/id_rsa
+ADD ci_insecure.pub /var/lib/jenkins/.ssh/id_rsa.pub 
+RUN chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa.pub
+# jenkins port
+EXPOSE 22 8081
+CMD ["/sbin/my_init"]
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

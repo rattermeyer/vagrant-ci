@@ -1,0 +1,15 @@
+# default: on
+# description: The git dæmon allows git repositories to be exported using \
+#       the git:// protocol.
+
+service git
+{
+        disable         = no
+        socket_type     = stream
+        wait            = no
+        user            = <%= user %>
+        server          = <%= git_daemon %>
+        env             = PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+        server_args     = --base-path=<%= base_path %> --base-path-relaxed --reuseaddr <% if export_all %> --export-all <% end %> --syslog --inetd --verbose <% if enable_receive_pack %> --enable=receive-pack<% end %><% if enable_upload_pack %> --enable=upload-pack<% end %><% if enable_upload_archive %> --enable=upload-archive<% end %> <%= base_path %>
+        log_on_failure  += USERID
+}
