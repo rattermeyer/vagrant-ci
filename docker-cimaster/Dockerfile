@@ -20,7 +20,11 @@ RUN mkdir -p /var/lib/jenkins/.ssh && chown -R jenkins:jenkins /var/lib/jenkins/
 ADD ci_insecure /var/lib/jenkins/.ssh/id_rsa 
 RUN chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa && chmod 600 /var/lib/jenkins/.ssh/id_rsa
 ADD ci_insecure.pub /var/lib/jenkins/.ssh/id_rsa.pub 
-RUN chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa.pub
+ADD ssh_config /var/lib/jenkins/.ssh/config
+# Create initial jenkins home with sample jobs
+ADD jenkins_home.tar.gz /var/lib/jenkins
+# Make sure jenkins home tree is owned by jenkins
+RUN chown -R jenkins:jenkins /var/lib/jenkins/
 # jenkins port
 EXPOSE 22 8081
 CMD ["/sbin/my_init"]
