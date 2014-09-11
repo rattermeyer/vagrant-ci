@@ -1,6 +1,7 @@
 FROM devopsarchitect/devbase
 MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
+RUN rm -fR /var/lib/apt/lists/*
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y build-essential ruby-all-dev git vim 

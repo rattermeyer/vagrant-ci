@@ -1,0 +1,14 @@
+jenkinsmaster:
+    build: docker-cimaster
+    ports: 
+        - "8080:8080"
+        - "10022:22"
+    links:
+        - repos
+repos:
+    build: docker-repos
+    ports:
+        - "8081:8081"
+        - "10023:22"
+slave:
+    build: docker-slave
