@@ -28,7 +28,7 @@ RUN sudo -u jenkins curl -o /var/lib/jenkins/swarm-client-1.15-jar-with-dependen
 ENTRYPOINT ["sudo", "-u", "jenkins", "java", "-jar", "/var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar"]
 
 # expose ssh 
-EXPOSE 22 
-CMD ["/sbin/my_init"]
+# EXPOSE 22 
+#CMD ["/sbin/my_init"]
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

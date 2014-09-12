@@ -3,9 +3,9 @@ MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
 RUN rm -fR /var/lib/apt/lists/*
 RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y build-essential ruby-all-dev git vim 
-RUN apt-get install -y puppet vim-puppet puppet-lint 
+RUN apt-get upgrade -y --force-yes
+RUN apt-get install -y --force-yes build-essential ruby-all-dev git vim 
+RUN apt-get install -y --force-yes puppet vim-puppet puppet-lint 
 RUN gem install bundler
 RUN gem install hiera
 RUN gem install librarian-puppet
@@ -27,7 +27,7 @@ ADD jenkins_home.tar.gz /var/lib/jenkins
 # Make sure jenkins home tree is owned by jenkins
 RUN chown -R jenkins:jenkins /var/lib/jenkins/
 # jenkins port
-EXPOSE 22 8081
+EXPOSE 22 8080
 CMD ["/sbin/my_init"]
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
