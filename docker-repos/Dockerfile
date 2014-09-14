@@ -1,7 +1,9 @@
 FROM devopsarchitect/devbase
 MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
+# Install Puppet 
 RUN apt-get install -y puppet
+# Prepare for Vagrant
 ADD ./prepare-vagrant-user.sh /tmp/
 RUN chmod u+x /tmp/prepare-vagrant-user.sh
 RUN /tmp/prepare-vagrant-user.sh 
