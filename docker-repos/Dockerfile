@@ -1,4 +1,4 @@
-FROM devopsarchitect/devbase
+FROM rattermeyer/ubuntu-jdk:1.0
 MAINTAINER Richard Attermeyer "richard.attermeyer@gmail.com"
 
 # Install Puppet 

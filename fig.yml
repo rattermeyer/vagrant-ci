@@ -7,8 +7,27 @@ jenkinsmaster:
         - repos
 repos:
     build: docker-repos
+    expose:
+        - "22"
+        - "8081"
     ports:
         - "8081:8081"
         - "10023:22"
 slave:
     build: docker-slave
+    links:
+        - jenkinsmaster
+smysql:
+    image: tpires/sonar-mysql
+    expose:
+        - "3306"
+    ports:
+        - "3306:3306"
+sonar:
+    image: tpires/sonar-server
+    expose: 
+        - "3306"
+    ports:
+        - "9000:9000"
+    links:
+        - smysql
