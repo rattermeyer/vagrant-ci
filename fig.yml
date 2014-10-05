@@ -4,30 +4,46 @@ jenkinsmaster:
         - "8080:8080"
         - "10022:22"
     links:
-        - repos
-repos:
-    build: docker-repos
+        - git
+        - nexus
+nexus:
+    build: docker-nexus
     expose:
-        - "22"
         - "8081"
+        - "22"
     ports:
         - "8081:8081"
+git:
+    build: docker-git
+    expose:
+        - "22"
+    ports:
         - "10023:22"
 slave:
     build: docker-slave
     links:
         - jenkinsmaster
-smysql:
-    image: tpires/sonar-mysql
+sonarmysql:
+    image: centurylink/mysql
     expose:
         - "3306"
     ports:
-        - "3306:3306"
+        - "13306:3306"
+    environment:
+        - MYSQL_DATABASE=sonar
+        - MYSQL_USER=sonar
+        - MYSQL_PASSWORD=sonar
 sonar:
-    image: tpires/sonar-server
+    build: docker-sonar
     expose: 
-        - "3306"
+        - "9000"
+        - "9092"
     ports:
         - "9000:9000"
+        - "9092:9092"
+    environment:
+        - SONAR_JDBC_URL=jdbc:mysql://mysql.dev.docker:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+        - SONAR_USER=sonar
+        - SONAR_PASSWORD=sonar
     links:
-        - smysql
+        - sonarmysql
