@@ -10,6 +10,7 @@ if [ -d /home/git/.ssh ]; then
   echo 'Skipping git SSH credentials configuration'
 else
   echo 'SSH key has not been set'
+  echo -n 'git:git' | chpasswd
   mkdir -p /home/git/.ssh
   echo $CI_KEY > /home/git/.ssh/authorized_keys
   chown -R git:git /home/git/.ssh
