@@ -6,7 +6,7 @@ ENV SONAR_HOME /opt/sonarqube-4.4
 RUN apt-get update
 RUN apt-get install -y unzip wget
 
-ADD http://dist.sonar.codehaus.org/sonarqube-4.4.zip /opt/
+RUN wget -P /opt http://dist.sonar.codehaus.org/sonarqube-4.4.zip
 
 RUN unzip /opt/sonarqube-4.4.zip -d /opt
 
