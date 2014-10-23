@@ -1,11 +1,3 @@
-jenkinsmaster:
-    build: docker-cimaster
-    ports: 
-        - "8080:8080"
-        - "10022:22"
-    links:
-        - git
-        - nexus
 nexus:
     build: docker-nexus
     expose:
@@ -21,8 +13,6 @@ git:
         - "10023:22"
 slave:
     build: docker-slave
-    links:
-        - jenkinsmaster
 sonarmysql:
     image: centurylink/mysql
     expose:
