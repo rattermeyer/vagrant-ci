@@ -1,5 +1,5 @@
 jenkinsmaster:
-    build: docker-cimaster
+    build: docker-jenkinsmaster
     ports: 
         - "8080:8080"
         - "10022:22"
@@ -23,6 +23,7 @@ slave:
     build: docker-slave
     links:
         - jenkinsmaster
+    privileged: true
 sonarmysql:
     image: centurylink/mysql
     expose:
@@ -47,3 +48,12 @@ sonar:
         - SONAR_PASSWORD=sonar
     links:
         - sonarmysql
+registry:
+    image: registry
+    ports: 
+        - "5000:5000"
+    environment:
+        - SETTINGS_FLAVOR=local
+        - STORAGE_PATH=/srv/registry
+        - SEARCH_BACKEND=sqlalchemy
+        - STORAGE=file

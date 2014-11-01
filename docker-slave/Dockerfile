@@ -11,6 +11,9 @@ RUN /tmp/prepare-vagrant-user.sh
 RUN echo StrictHostKeyChecking no >> /etc/ssh/ssh_config
 RUN echo UserKnownHostsFile /dev/null >> /etc/ssh/ssh_config
 
+# Docker Installation (to be able to build docker images)
+RUN apt-get install -y apparmor
+RUN curl -sSL https://get.docker.com/ubuntu/ | sh
 # Jenkins user
 RUN adduser --home /var/lib/jenkins jenkins
 RUN echo 'jenkins:jenkins' | chpasswd
@@ -32,4 +35,12 @@ RUN sudo -u jenkins curl -o /var/lib/jenkins/swarm-client-1.15-jar-with-dependen
 #CMD ["/sbin/my_init"]
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-CMD sudo -u jenkins java -jar /var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar -master http://`dig +short jenkinsci_jenkinsmaster.dev.docker`:8080/jenkins/ -executors 1 -fsroot /var/lib/jenkins
+
+# Install docker wrapper script
+ADD ./wrapdocker /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+
+VOLUME /var/lib/docker
+
+#CMD sudo -u jenkins java -jar /var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar -master http://`dig +short jenkinsci_jenkinsmaster.dev.docker`:8080/jenkins/ -executors 1 -fsroot /var/lib/jenkins
+CMD wrapdocker
