@@ -32,11 +32,11 @@ RUN /tmp/patch-jenkins-war.sh /usr/share/jenkins/jenkins.war ${PLUGIN_DIR} /tmp/
 ADD jenkins_home.tar.gz ${JENKINS_HOME}
 
 RUN mkdir -p ${JENKINS_HOME}/.ssh
-ADD ci_insecure ${JENKINS_HOME}/.ssh/id_rsa && chmod 0600 ${JENKINS_HOME}/.ssh/id_rsa
+ADD ci_insecure ${JENKINS_HOME}/.ssh/id_rsa 
 ADD ci_insecure.pub ${JENKINS_HOME}/.ssh/id_rsa.pub
 ADD ssh_config ${JENKINS_HOME}/.ssh/config
 
-RUN chown -R jenkins:jenkins ${JENKINS_HOME}
+RUN chown -R jenkins:jenkins ${JENKINS_HOME} && chmod 0600 ${JENKINS_HOME}/.ssh/id_rsa
 
 VOLUME /var/jenkins_home
 USER jenkins
