@@ -7,7 +7,7 @@ for x in async-http-client/1.7.4/async-http-client.hpi \
     chucknorris/0.5/chucknorris.hpi \
     chosen-views-tabbar/1.2/chosen-views-tabbar.hpi \
     conditional-buildstep/1.3.3/conditional-buildstep.hpi \
-    config-file-provider/1.3.3/config-file-provider.hpi \
+    config-file-provider/2.7.5/config-file-provider.hpi \
     credentials/1.16.1/credentials.hpi \
     delivery-pipeline-plugin/0.8.6/delivery-pipeline-plugin.hpi \
     docker-plugin/0.7/docker-plugin.hpi \
@@ -15,7 +15,7 @@ for x in async-http-client/1.7.4/async-http-client.hpi \
     git/2.2.5/git.hpi \
     git-client/1.10.1/git-client.hpi \
     gitlab-hook/1.1.0/gitlab-hook.hpi \
-    greenballs/1.114/greenballs.hpi \
+    greenballs/1.14/greenballs.hpi \
     jobConfigHistory/2.9/jobConfigHistory.hpi \
     jquery/1.7.2-1/jquery.hpi \
     jquery-ui/1.0.2/jquery-ui.hpi \
