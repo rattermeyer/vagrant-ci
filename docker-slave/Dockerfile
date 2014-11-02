@@ -27,7 +27,7 @@ RUN chmod 0700 /var/lib/jenkins/.ssh && chmod 0600 /var/lib/jenkins/.ssh/*
 VOLUME ["/var/lib/jenkins/jobs"]
 
 # Swarm Client
-RUN sudo -u jenkins curl -o /var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.15/swarm-client-1.15-jar-with-dependencies.jar
+RUN sudo -u jenkins curl -o /var/lib/jenkins/swarm-client-1.20-jar-with-dependencies.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.15/swarm-client-1.15-jar-with-dependencies.jar
 #ENTRYPOINT ["sudo", "-u", "jenkins", "java", "-jar", "/var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar"]
 
 # expose ssh 
@@ -43,4 +43,4 @@ RUN chmod +x /usr/local/bin/wrapdocker
 VOLUME /var/lib/docker
 
 #CMD sudo -u jenkins java -jar /var/lib/jenkins/swarm-client-1.15-jar-with-dependencies.jar -master http://`dig +short jenkinsci_jenkinsmaster.dev.docker`:8080/jenkins/ -executors 1 -fsroot /var/lib/jenkins
-CMD wrapdocker
+CMD /usr/local/bin/wrapdocker
